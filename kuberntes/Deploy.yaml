@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: nginx-forward-proxy
-          image: gcr.io/micasino-staging/forward-proxy:latest
+          image: gcr.io/staging/forward-proxy:latest
           args: []
           ports:
             - containerPort: 80
@@ -27,8 +27,6 @@ spec:
           imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      serviceAccountName: micasino-staging-deployments
-      serviceAccount: micasino-staging-deployments
   strategy:
     type: RollingUpdate
     rollingUpdate:
