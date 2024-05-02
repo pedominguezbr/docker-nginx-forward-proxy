@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-forward-proxy
+  namespace: default
+  labels:
+    app: nginx-forward-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-forward-proxy
+  template:
+    metadata:
+      labels:
+        app: nginx-forward-proxy
+
+    spec:
+      containers:
+        - name: nginx-forward-proxy
+          image: gcr.io/micasino-staging/forward-proxy:latest
+          args: []
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: micasino-staging-deployments
+      serviceAccount: micasino-staging-deployments
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 100%
